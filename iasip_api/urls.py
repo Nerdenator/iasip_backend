@@ -5,7 +5,8 @@ from iasip_api import views
 # API endpoints
 urlpatterns = format_suffix_patterns([
     url(r'^$', views.api_root),
-    url(r'^characters/$', views.CharacterList.as_view(),
+    url(r'^characters/$',
+        views.CharacterList.as_view(),
         name='character-list'),
     url(r'^characters/(?P<pk>[0-9]+)/$',
         view.CharacterDetail.as_view(),
@@ -25,3 +26,4 @@ urlpatterns += [
     url(r'^api-auth/', include('rest_framework.urls',
             namespace='rest_framework')),
 ]
+

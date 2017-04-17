@@ -4,7 +4,7 @@ from iasip_api.serializers import CharacterSerializer, UserSerializer
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.reverse import Reverse
+from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 from rest_framework import renderers
 
@@ -16,6 +16,7 @@ def api_root(request, format=None):
         'characters': reverse('character-list', request=request, format=format),
     })
 
+
 class CharacterHighlight(generics.GenericAPIView):
     """
     Probably don't need this, or maybe we do. Not sure.
@@ -26,6 +27,7 @@ class CharacterHighlight(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         character = self.get_object()
         return Response(character.preferred_name)
+
 
 class CharacterList(generics.ListCreateAPIView):
     """
