@@ -1,33 +1,19 @@
 from django.conf.urls import url, include
-from rest_framework.urlpatterns import format_suffix_patterns
 from iasip_api import views
+from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view
 
+schema_view = get_schema_view(title="It's Always Sunny in Philadelphia API")
 
-# API endpoints
+# Create a router and register our viewsets with it
+router = DefaultRouter()
+router.register(r'characters', views.CharacterViewSet)
+router.register(r'users', views.UserViewSet)
 
-urlpatterns = format_suffix_patterns([
-    url(r'^$', views.api_root),
-    url(r'^characters/$',
-        views.CharacterList.as_view(),
-        name='character-list'),
-    url(r'^characters/(?P<pk>[0-9]+)/$',
-        views.CharacterDetail.as_view(),
-        name='character-detail'),
-    url(r'^characters/(?P<pk>[0-9]+)/highlight/$',
-        views.CharacterHighlight.as_view(),
-        name='character-highlight'),
-    url(r'^users/$',
-        views.UserList.as_view(),
-        name='user-list'),
-    url(r'^users/(?P<pk>[0-9]+)/$',
-        views.UserDetail.as_view(),
-        name='user-detail')
-])
-
-
-
-urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls',
-            namespace='rest_framework')),
+# The API URLs are now determined automatically by the router.
+# Additionally, we include the login URLs for the browsable API.
+urlpatterns = [
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^schemas/$', schema_view),
 ]
-
