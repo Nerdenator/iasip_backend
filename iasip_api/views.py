@@ -12,7 +12,7 @@ def character_list(request):
     List all characters, or create a new one.
     """
     if request.method == 'GET':
-        characters = Characters.objects.all()
+        characters = Character.objects.all()
         serializer = CharacterSerializer(characters, many=True)
         return JsonResponse(serializer.data, safe=False)
 
