@@ -9,7 +9,7 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Character
-        fields = ('url', 'id', 'first_name', 'last_name', 'preferred_name', 'owner',)
+        fields = ('url', 'id', 'first_name', 'last_name', 'preferred_name', 'owner', 'highlight',)
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
