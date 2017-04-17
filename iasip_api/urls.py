@@ -12,7 +12,7 @@ urlpatterns = format_suffix_patterns([
         name='character-list'),
     url(r'^characters/(?P<pk>[0-9]+)/$',
         views.CharacterDetail.as_view(),
-        name='snippet-detail'),
+        name='character-detail'),
     url(r'^characters/(?P<pk>[0-9]+)/highlight/$',
         views.CharacterHighlight.as_view(),
         name='characters-highlight'),
