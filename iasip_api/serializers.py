@@ -4,7 +4,7 @@ from rest_framework import serializers
 from iasip_api.models import Character
 
 class CharacterSerializer(serializers.HyperlinkedModelSerializer):
-    owner = serializer.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='character-highlight', format='html')
 
     class Meta:
