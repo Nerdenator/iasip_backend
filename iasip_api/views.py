@@ -34,7 +34,7 @@ def character_detail(request, pk, format=None):
 
     if request.method == 'GET':
         serializer = CharacterSerializer(character)
-            return Response(serializer.data)
+        return Response(serializer.data)
 
     elif request.method == 'PUT':
         serializer = CharacterSerializer(character, data=request.data)
