@@ -15,10 +15,12 @@ class CharacterList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class CharacterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
+
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
