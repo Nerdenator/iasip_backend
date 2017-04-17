@@ -1,47 +1,49 @@
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from iasip_api.models import Character
 from iasip_api.serializers import CharacterSerializer
 
 
-@csrf_exempt
-def character_list(request):
+@api_view(['GET', 'POST'])
+def character_list(request, format=None):
     """
     List all characters, or create a new one.
     """
     if request.method == 'GET':
         characters = Character.objects.all()
         serializer = CharacterSerializer(characters, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = CharacterSerializer(data=data)
+        serializer = CharacterSerializer(data=request.data)
         if serialier.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
-def character_detail(request):
+@api_view(['GET', 'PUT', 'DELETE'])
+def character_detail(request, pk, format=None):
     """
     Retrieve, update, or delete a character.
     """
     try:
         character = Character.objects.get(pk=pk)
     except Character.DoesNotExist:
-        return HttpResponse(status=404)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = SnippetSerializer(snippet)
+        serializer = CharacterSerializer(character)
+            return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = CharacterSerializer(character, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        snippet.delete()
-        return HttpResponse(status=204)
+        character.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
