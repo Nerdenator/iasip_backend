@@ -13,3 +13,18 @@ class Character(models.Model):
 
     class Meta:
         ordering = ('preferred_name',)
+
+
+class Crime(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    criminal_charge = models.CharField(max_length=500, blank=False, default='')
+    degree = models.CharField(max_length=50, blank=True, default='')
+    charge_class = models.CharField(max_length=10, blank=True, default='')
+    charge_type = models.CharField(max_length=50, blank=True, default='')
+    jurisdiction = models.CharField(max_length=100, blank=True, default='')
+
+    def save(self, *args, **kwargs):
+        super(Crime, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ('criminal_charge',)
