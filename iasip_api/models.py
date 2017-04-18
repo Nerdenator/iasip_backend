@@ -22,6 +22,7 @@ class Crime(models.Model):
     charge_class = models.CharField(max_length=10, blank=True, default='')
     charge_type = models.CharField(max_length=50, blank=True, default='')
     jurisdiction = models.CharField(max_length=100, blank=True, default='')
+    owner = models.ForeignKey('auth.User', related_name='crimes', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         super(Crime, self).save(*args, **kwargs)
