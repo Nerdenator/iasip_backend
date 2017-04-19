@@ -50,8 +50,9 @@ class CrimeDetail(APIView):
         return Response(serializer.data)
 
 
-class CharacterCrimeList(APIView):
-    queryset = Crime.objects
+class CharacterCrimeList(generics.ListAPIView):
+    queryset = CharacterCrime.objects.all()
+    serializer_class = CharacterCrimeSerializer
 
 class CharacterCrimeDetail(APIView):
     """
