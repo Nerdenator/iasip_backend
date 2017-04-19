@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import CharacterCrime, Character, Crimes
+from .models import CharacterCrime, Character, Crime
 # Register your models here.
 admin.site.register(Character)
-admin.site.register(Crimes)
+admin.site.register(Crime)
 admin.site.register(CharacterCrime)

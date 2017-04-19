@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Crimes(models.Model):
+class Crime(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     criminal_charge = models.CharField(max_length=500, blank=False, default='')
     degree = models.CharField(max_length=50, blank=True, default='')
@@ -9,7 +9,7 @@ class Crimes(models.Model):
     jurisdiction = models.CharField(max_length=100, blank=True, default='')
 
     def save(self, *args, **kwargs):
-        super(Crimes, self).save(*args, **kwargs)
+        super(Crime, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.criminal_charge
@@ -23,7 +23,7 @@ class Character(models.Model):
     first_name = models.CharField(max_length=100, blank=True, default='')
     last_name = models.CharField(max_length=100, blank=True, default='')
     preferred_name = models.CharField(max_length=100, blank=False, default='')
-    crimes = models.ManyToManyField(Crimes, null=True, through='CharacterCrime')
+    crimes = models.ManyToManyField(Crime, null=True, through='CharacterCrime')
 
     def save(self, *args, **kwargs):
         super(Character, self).save(*args, **kwargs)
@@ -38,7 +38,7 @@ class Character(models.Model):
 class CharacterCrime(models.Model):
     """Crime as committed by a character"""
     character = models.ForeignKey(Character)
-    crime = models.ForeignKey(Crimes)
+    crime = models.ForeignKey(Crime)
     season = models.IntegerField()
     episode = models.IntegerField()
 
