@@ -12,3 +12,9 @@ class CrimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crime
         fields = ('id', 'created', 'criminal_charge', 'degree', 'charge_type', 'jurisdiction')
+
+
+class CharacterCrimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CharacterCrime
+        fields = ('id', 'character', 'crime', 'season', 'episode')

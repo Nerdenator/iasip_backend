@@ -1,7 +1,7 @@
 from django.http import Http404
 
 from iasip_api.models import CharacterCrime, Character, Crime
-from iasip_api.serializers import CharacterSerializer, CrimeSerializer
+from iasip_api.serializers import CharacterSerializer, CrimeSerializer, CharacterCrimeSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -49,3 +49,20 @@ class CrimeDetail(APIView):
         serializer = CrimeSerializer(crime)
         return Response(serializer.data)
 
+
+class CharacterCrimeList(APIView):
+    queryset = Crime.objects
+
+class CharacterCrimeDetail(APIView):
+    """
+    Retrieve a character, then their crimes
+    """
+    def get_object(self, pk):
+        try:
+            return CharacterCrime.objects.filter(character__preferred_name=pk)
+        except CharacterCrime.DoesNotExist:
+            raise Http404
+    def get(self, request, pk, format=None):
+        character_crimes = self.get_object(pk=pk)
+        serializer = CharacterCrimeSerializer(character_crimes)
+        return Response(serializer.data)
