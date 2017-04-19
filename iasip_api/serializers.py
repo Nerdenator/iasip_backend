@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from iasip_api.models import Character, Crimes, CharacterCrime
@@ -11,14 +10,6 @@ class CharacterSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Character
         fields = ('url', 'id', 'first_name', 'last_name', 'preferred_name', 'owner', 'highlight',)
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    characters = serializers.HyperlinkedRelatedField(many=True, view_name='character-detail', read_only=True)
-
-    class Meta:
-        model = User
-        fields = ('url', 'id', 'username', 'characters', )
 
 
 class CrimeSerializer(serializers.HyperlinkedModelSerializer):

@@ -10,7 +10,6 @@ schema_view = get_schema_view(title="It's Always Sunny in Philadelphia API")
 # Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
     url(r'^characters/$', views.CharacterList.as_view()),
-    url(r'^users/$', views.UserList.as_view()),
-    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
+    url(r'^characters/(?P<pk>[0-9]+)/$', views.CharacterDetail.as_view()),
     url(r'^schemas/$', schema_view),
 ]

@@ -13,6 +13,9 @@ class Crimes(models.Model):
     def save(self, *args, **kwargs):
         super(Crimes, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.criminal_charge
+
     class Meta:
         ordering = ('criminal_charge',)
 
@@ -28,6 +31,9 @@ class Character(models.Model):
     def save(self, *args, **kwargs):
         super(Character, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.preferred_name
+
     class Meta:
         ordering = ('preferred_name',)
 
@@ -36,9 +42,11 @@ class CharacterCrime(models.Model):
     """Crimes as committed by a character"""
     character = models.ForeignKey(Character)
     crime = models.ForeignKey(Crimes)
-    season = models.CharField(max_length=3)
-    episode = models.CharField(max_length=3)
+    season = models.IntegerField()
+    episode = models.IntegerField()
+
+    def __str__(self):
+        return '{}.{}: {}- {}'.format(self.season, self.episode, self.character, self.crime)
 
     def save(self, *args, **kwargs):
         super(CharacterCrime, self).save(*args, **kwargs)
-
