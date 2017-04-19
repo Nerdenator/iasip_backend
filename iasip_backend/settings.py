@@ -122,8 +122,8 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
-CORS_ORIGIN_ALLOW_ALL=True
-CORS_ALLOW_METHODS = (
-    'GET',
-)
+# CORS_ORIGIN_ALLOW_ALL=True
+# CORS_ALLOW_METHODS = (
+#     'GET',
+# )
 
