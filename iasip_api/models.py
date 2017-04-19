@@ -7,7 +7,6 @@ class Crimes(models.Model):
     degree = models.CharField(max_length=50, blank=True, default='')
     charge_type = models.CharField(max_length=50, blank=True, default='')
     jurisdiction = models.CharField(max_length=100, blank=True, default='')
-    owner = models.ForeignKey('auth.User', related_name='crime', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         super(Crimes, self).save(*args, **kwargs)
@@ -24,7 +23,6 @@ class Character(models.Model):
     first_name = models.CharField(max_length=100, blank=True, default='')
     last_name = models.CharField(max_length=100, blank=True, default='')
     preferred_name = models.CharField(max_length=100, blank=False, default='')
-    owner = models.ForeignKey('auth.User', related_name='characters', on_delete=models.CASCADE)
     crimes = models.ManyToManyField(Crimes, null=True, through='CharacterCrime')
 
     def save(self, *args, **kwargs):
@@ -38,7 +36,7 @@ class Character(models.Model):
 
 
 class CharacterCrime(models.Model):
-    """Crimes as committed by a character"""
+    """Crime as committed by a character"""
     character = models.ForeignKey(Character)
     crime = models.ForeignKey(Crimes)
     season = models.IntegerField()
