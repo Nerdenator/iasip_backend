@@ -24,7 +24,7 @@ SECRET_KEY = '&ll2@4=mb5-e=h&c%!+ppv4#7b8!y(d^6i#h9r0_5@6d2fhv(3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['iasip-backend.herokuapp.com']
+ALLOWED_HOSTS = ['iasip-backend.herokuapp.com', '127.0.0.1']
 
 # Application definition
 

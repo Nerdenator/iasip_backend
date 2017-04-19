@@ -1,47 +1,28 @@
-from iasip_api.models import Character
-from iasip_api.permissions import IsOwnerOrReadOnly
-from iasip_api.serializers import CharacterSerializer, UserSerializer
-from rest_framework import generics, permissions, viewsets
-from rest_framework.decorators import api_view, detail_route
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
+from iasip_api.models import CharacterCrime, Character, Crimes
+from iasip_api.serializers import CharacterSerializer, UserSerializer, CharacterCrimeSerializer
 from django.contrib.auth.models import User
-from rest_framework import renderers
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status, generics
 
 
-
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'characters': reverse('character-list', request=request, format=format),
-    })
-
-
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class CharacterList(APIView):
     """
-    This viewset automatically provides `list` and `detail` actions.
+    List all characters.
     """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    def get(self, request, format=None):
+        characters = Character.objects.all()
+        serializer = CharacterSerializer(characters, many=True)
+        return Response(serializer.data)
 
 
-class CharacterViewSet(viewsets.ModelViewSet):
+class CharacterCrimeList(APIView):
     """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update`, and `destroy` actions.
-    
-    Additionally we also provide an extra `highlight` action.
+    Show all CharacterCrimes.
     """
+    def get(self, request, format=None):
+        characterCrimes = CharacterCrime.objects.all()
+        serializer = CharacterSerializer
 
-    queryset = Character.objects.all()
-    serializer_class = CharacterSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
 
-    @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
-    def highlight(self, request, *args, **kwargs):
-        character = self.get_object()
-        return Response(character.preferred_name)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
