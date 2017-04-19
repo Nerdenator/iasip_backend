@@ -102,3 +102,6 @@ ENV/
 
 # jetbrains crap
 .idea/
+
+# sooper sekrit stuffz
+settings_secret.py
