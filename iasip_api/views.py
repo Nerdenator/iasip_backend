@@ -54,15 +54,17 @@ class CharacterCrimeList(generics.ListAPIView):
     queryset = CharacterCrime.objects.all()
     serializer_class = CharacterCrimeSerializer
 
+
 class CharacterCrimeDetail(APIView):
     """
     Retrieve a character, then their crimes
     """
     def get_object(self, pk):
         try:
-            return CharacterCrime.objects.filter(character__preferred_name=pk)
+            return CharacterCrime.objects.get(character__id=pk)
         except CharacterCrime.DoesNotExist:
             raise Http404
+
     def get(self, request, pk, format=None):
         character_crimes = self.get_object(pk=pk)
         serializer = CharacterCrimeSerializer(character_crimes)

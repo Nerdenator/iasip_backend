@@ -19,6 +19,7 @@ class Crime(models.Model):
 
 
 class Character(models.Model):
+    id = models.IntegerField(unique=True, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=100, blank=True, default='')
     last_name = models.CharField(max_length=100, blank=True, default='')
