@@ -15,6 +15,8 @@ class CrimeSerializer(serializers.ModelSerializer):
 
 
 class CharacterCrimeSerializer(serializers.ModelSerializer):
+    character = serializers.StringRelatedField()
+    crime = serializers.StringRelatedField()
     class Meta:
         model = CharacterCrime
-        fields = ('id', 'character', 'crime', 'season', 'episode')
+        fields = ('character', 'crime', 'season', 'episode')
