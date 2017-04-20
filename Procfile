@@ -1,1 +1,1 @@
-web: gunicorn iasip_backend.wsgih
+web: gunicorn iasip_backend.wsgi
