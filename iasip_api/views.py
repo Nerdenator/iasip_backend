@@ -61,11 +61,11 @@ class CharacterCrimeDetail(APIView):
     """
     def get_object(self, pk):
         try:
-            return CharacterCrime.objects.get(character__id=pk)
+            return CharacterCrime.objects.filter(character__id=pk)
         except CharacterCrime.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         character_crimes = self.get_object(pk=pk)
-        serializer = CharacterCrimeSerializer(character_crimes)
+        serializer = CharacterCrimeSerializer(character_crimes, many=True)
         return Response(serializer.data)
