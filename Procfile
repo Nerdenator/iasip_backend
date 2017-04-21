@@ -1,1 +1,1 @@
-web: gunicorn iasip_backend.wsgi
+web: python iasip_backend/manage.py collectstatic --noinput; bin/gunicorn_django --workers=1 --bind=0.0.0.0:$PORT iasip_backend/settings.py
