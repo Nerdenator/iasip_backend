@@ -1,1 +1,1 @@
-web: gunicorn iasip_backend.wsgi
+web: gunicorn iasip_backend.wsgi collectstatic --noinput
