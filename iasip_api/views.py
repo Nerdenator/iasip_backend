@@ -57,7 +57,7 @@ class CharacterCrimeList(generics.ListAPIView):
 
 class CharacterCrimeDetail(APIView):
     """
-    Retrieve a character, then their crimes
+    Retrieve a specific Character Crime
     """
     def get_object(self, pk):
         try:
@@ -68,4 +68,20 @@ class CharacterCrimeDetail(APIView):
     def get(self, request, pk, format=None):
         character_crimes = self.get_object(pk=pk)
         serializer = CharacterCrimeSerializer(character_crimes, many=True)
+        return Response(serializer.data)
+
+
+class CharacterCrimeListByCharacter(APIView):
+    """
+    Get a list of Character Crimes for a specific character
+    """
+    def get_object(self, name):
+        try:
+            return CharacterCrime.objects.filter(character__preferred_name=name)
+        except CharacterCrime.DoesNotExist:
+            raise Http404
+
+    def get(self, request, name):
+        character_crime_by_character = self.get_object(name=name)
+        serializer = CharacterCrimeSerializer(character_crime_by_character, many=True)
         return Response(serializer.data)
