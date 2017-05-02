@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^crimes/(?P<pk>[0-9]+)/$', views.CrimeDetail.as_view()),
     url(r'^character_crimes/$', views.CharacterCrimeList.as_view()),
     url(r'^character_crimes/(?P<pk>[0-9]+)/$', views.CharacterCrimeDetail.as_view()),
-    url(r'^character_crimes/(?P<name>)/$', views.CharacterCrimeListByCharacter.as_view())
+    url(r'^character_crimes/(?P<name>[\w\-]+)/$', views.CharacterCrimeListByCharacter.as_view())
 ]
