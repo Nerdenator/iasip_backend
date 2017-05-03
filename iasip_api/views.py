@@ -82,6 +82,6 @@ class CharacterCrimeListByCharacter(APIView):
             raise Http404
 
     def get(self, request, name):
-        character_crime_by_character = self.get_object(name=name)
+        character_crime_by_character = self.get_object(url_name=name)
         serializer = CharacterCrimeSerializer(character_crime_by_character, many=True)
         return Response(serializer.data)
